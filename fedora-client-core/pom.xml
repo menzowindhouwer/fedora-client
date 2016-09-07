@@ -203,7 +203,7 @@
       </testResource>
     </testResources>
     <plugins>
-      <plugin>
+      <!-- --><plugin>
         <groupId>com.yourmediashelf.fedora</groupId>
         <artifactId>fedora-cargo-plugin</artifactId>
         <configuration>
@@ -226,7 +226,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin><!-- -->
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>

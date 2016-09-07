@@ -102,6 +102,10 @@ public class FedoraClient {
      * @param fc credentials for a Fedora repository
      */
     public FedoraClient(FedoraCredentials fc) {
+        this(null,fc);
+    }
+
+    public FedoraClient(SSLContext ssl,FedoraCredentials fc) {
         this.fc = fc;
 
         // TODO validate fc
@@ -109,15 +113,17 @@ public class FedoraClient {
         // null check for baseUrl
 
         // FIXME this isn't very security-minded
-        if (fc.getBaseUrl().toString().startsWith("https")) {
-            SSLContext ctx = null;
-            try {
-                ctx = SSLContext.getInstance("SSL");
-                ctx.init(null, null, null);
-            } catch (NoSuchAlgorithmException e) {
-                logger.error(e.getMessage(), e);
-            } catch (KeyManagementException e) {
-                logger.error(e.getMessage(), e);
+        if (fc.getBaseUrl().toString().startsWith("https")) {            
+            SSLContext ctx = ssl;
+            if (ctx == null) {
+                try {
+                    ctx = SSLContext.getInstance("SSL");
+                    ctx.init(null, null, null);
+                } catch (NoSuchAlgorithmException e) {
+                    logger.error(e.getMessage(), e);
+                } catch (KeyManagementException e) {
+                    logger.error(e.getMessage(), e);
+                }
             }
             ClientConfig config = new DefaultClientConfig();
             // FIXME Consider using not-yet-commons-ssl hostnameverifier

@@ -104,13 +104,13 @@ public class XmlSerializerTest {
         testCanonicalization("3.4");
     }
 
-    @Test
+    //@Test
     /**
      * @throws Exception
      */
-    public void test36() throws Exception {
-        testCanonicalization("3.6");
-    }
+    //public void test36() throws Exception {
+    //    testCanonicalization("3.6");
+    //}
 
     private void testCanonicalization(String prefix) throws Exception {
         String input = String.format("%s-input.xml", prefix);
