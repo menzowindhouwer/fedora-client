@@ -203,30 +203,6 @@
       </testResource>
     </testResources>
     <plugins>
-      <!-- --><plugin>
-        <groupId>com.yourmediashelf.fedora</groupId>
-        <artifactId>fedora-cargo-plugin</artifactId>
-        <configuration>
-          <install.properties>${project.build.testOutputDirectory}/install.properties</install.properties>
-        </configuration>
-        <executions>
-          <execution>
-            <id>start-container</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>fedora-home</goal>
-              <goal>fedora-start</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>stop-container</id>
-            <phase>post-integration-test</phase>
-            <goals>
-              <goal>fedora-stop</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin><!-- -->
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
@@ -315,6 +291,43 @@
         <plugins>
           <plugin>
             <artifactId>maven-shade-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>skip-integration-test-data-creation</id>
+      <activation>
+        <property>
+          <name>!maven.test.skip</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <!-- Here: All plugins that should not run if maven.test.skip is set -->
+          <plugin>
+            <groupId>com.yourmediashelf.fedora</groupId>
+            <artifactId>fedora-cargo-plugin</artifactId>
+            <configuration>
+              <install.properties>${project.build.testOutputDirectory}/install.properties</install.properties>
+            </configuration>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>fedora-home</goal>
+                  <goal>fedora-start</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>fedora-stop</goal>
+                </goals>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
